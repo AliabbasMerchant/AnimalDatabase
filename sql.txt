@@ -1,35 +1,48 @@
-CREATE TABLE IF NOT EXISTS ${constants.species_table} (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-species VARCHAR(255), 
-genus VARCHAR(255), 
-family VARCHAR(255), 
-order VARCHAR(255), 
-class VARCHAR(255), 
-phylum VARCHAR(255), 
-kingdom VARCHAR(255), 
-domain VARCHAR(255), 
-status VARCHAR(100)
+CREATE TABLE IF NOT EXISTS animal_species (
+animal_species VARCHAR(255) NOT NULL PRIMARY KEY,
+common_name VARCHAR(255) NOT NULL,
+description TEXT,
+_genus VARCHAR(255),
+_order VARCHAR(255),
+_class VARCHAR(255),
+_phylum VARCHAR(255),
+_status VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS ${constants.animals_table} (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+CREATE TABLE IF NOT EXISTS animals (
+animal_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
 name VARCHAR(255), 
-photo BLOB, 
-location JSON, 
-species_id INT, // FK
 dob DATE, 
 status VARCHAR(100),
 gender VARCHAR(100),
-description TEXT
+description TEXT,
+photo BLOB, 
+animal_species VARCHAR(255) NOT NULL REFERENCES animal_species(animal_species),
+location POINT
 );
 
-CREATE TABLE IF NOT EXISTS ${constants.location_table} (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-name VARCHAR(255)
+CREATE TABLE IF NOT EXISTS plant_species (
+plant_species VARCHAR(255) NOT NULL PRIMARY KEY,
+common_name VARCHAR(255) NOT NULL,
+description TEXT,
+_genus VARCHAR(255),
+_order VARCHAR(255),
+_class VARCHAR(255),
+_phylum VARCHAR(255),
+_status VARCHAR(100)
 );
 
-CREATE TABLE IF NOT EXISTS ${constants.coordinates_table} (
-id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
-location_id INT, // FK
-coordinate JSON
+CREATE TABLE IF NOT EXISTS plants (
+plant_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY, 
+description TEXT,
+number INT, 
+status VARCHAR(100),
+photo BLOB, 
+plant_species VARCHAR(255) REFERENCES plant_species(plant_species),
+location POINT
+);
+
+CREATE TABLE IF NOT EXISTS areas (
+name VARCHAR(255) NOT NULL PRIMARY KEY,
+boundary POLYGON
 );

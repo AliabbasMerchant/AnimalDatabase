@@ -1,7 +1,8 @@
 module.exports = {
-    db: "AnimalDB",
+    db: "wildlife",
+    animal_species_table: "animal_species",
     animals_table: "animals",
-    species_table: "species",
-    location_table: "location",
-    coordinates_table: "coordinates",
+    plant_species_table: "plant_species",
+    plants_table: "plants",
+    area_table: "areas"
 };
