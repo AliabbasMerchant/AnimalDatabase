@@ -46,3 +46,59 @@ CREATE TABLE IF NOT EXISTS areas (
 name VARCHAR(255) NOT NULL PRIMARY KEY,
 boundary POLYGON
 );
+
+Queries List:
+
+SELECT * FROM animal_species;
+SELECT * FROM plant_species;
+SELECT * FROM animals;
+SELECT * FROM plants;
+SELECT * FROM areas;
+SELECT common_name FROM animal_species;
+SELECT description FROM animal_species;
+SELECT _class FROM animal_species;
+SELECT _genus FROM animal_species;
+SELECT _order FROM animal_species;
+SELECT _phylum FROM animal_species;
+SELECT _status FROM animal_species;
+// SELECT animal_species FROM animal_species;
+SELECT common_name FROM plant_species;
+SELECT description FROM plant_species;
+SELECT _class FROM plant_species;
+SELECT _genus FROM plant_species;
+SELECT _order FROM plant_species;
+SELECT _phylum FROM plant_species;
+SELECT _status FROM plant_species;
+// SELECT plant_species FROM plant_species;
+SELECT plant_id FROM plants;
+SELECT description FROM plants;
+SELECT number FROM plants;
+SELECT status FROM plants;
+SELECT photo FROM plants;
+SELECT location FROM plants;
+//SELECT plant_species FROM plants;
+SELECT animal_id FROM animals;
+SELECT name FROM animals;
+SELECT photo FROM animals;
+SELECT dob FROM animals;
+SELECT status FROM animals;
+SELECT gender FROM animals;
+SELECT description FROM animals;
+SELECT location FROM animals;
+//SELECT animal_species FROM animals;
+SELECT name FROM areas;
+SELECT boundary FROM areas;
+SELECT * FROM animals WHERE status==alive;
+SELECT * FROM plants WHERE status==alive;
+SELECT * FROM animal_species WHERE status==alive;
+SELECT * FROM plant_species WHERE status==alive;
+SELECT * FROM animal_species WHERE _class==    ;
+SELECT * FROM animal_species WHERE _genus==    ;
+SELECT * FROM animal_species WHERE _order==    ;
+SELECT * FROM animal_species WHERE _phylum==    ;
+SELECT * FROM animal_species WHERE _status==    ;
+SELECT * FROM plant_species WHERE _class==    ;
+SELECT * FROM plant_species WHERE _genus==    ;
+SELECT * FROM plant_species WHERE _order==    ;
+SELECT * FROM plant_species WHERE _phylum==    ;
+SELECT * FROM plant_species WHERE _status==    ;
