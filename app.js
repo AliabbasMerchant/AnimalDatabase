@@ -85,6 +85,7 @@ function create_tables(con) {
         console.log("Area Table created");
     });
 }
+
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected to MySQL!");
@@ -92,7 +93,7 @@ con.connect(function (err) {
         if (err) throw err;
         console.log("Database created");
       });
-    create_tables(con);
+     create_tables(con);
 });
 
 app.use(express.urlencoded({

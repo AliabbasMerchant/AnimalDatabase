@@ -76,7 +76,7 @@ SELECT number FROM plants;
 SELECT status FROM plants;
 SELECT photo FROM plants;
 SELECT location FROM plants;
-//SELECT plant_species FROM plants;
+SELECT plant_species FROM plants;
 SELECT animal_id FROM animals;
 SELECT name FROM animals;
 SELECT photo FROM animals;
