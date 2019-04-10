@@ -3,10 +3,14 @@ const express = require("express");
 var router = express.Router();
 
 router.get("/", (req, res) => {
-    res.send("HOME")
+    res.render("home");
 })
 
 router.post("/results", (req, res) => {
+    res.send("RESULTS")
+});
+
+router.get("/admin", (req, res) => {
     res.send("RESULTS")
 });
 
@@ -15,10 +19,6 @@ router.get("/show/:id?", (req, res) => {
 });
 
 router.get("/add", (req, res) => {
-    res.send("ADD")
-});
-
-router.post("/add", (req, res) => {
     res.send("ADD")
 });
 

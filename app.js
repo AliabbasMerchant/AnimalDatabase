@@ -1,6 +1,7 @@
 'use strict';
 const express = require('express');
 const mysql = require('mysql');
+// const flash = require('connect-flash');
 const constants = require('./constants');
 const secrets = require('./secrets');
 
@@ -96,9 +97,18 @@ con.connect(function (err) {
      create_tables(con);
 });
 
+app.set("view engine", "ejs");
+app.use(express.static(__dirname + "/public"));
 app.use(express.urlencoded({
     extended: true
 }));
+
+// app.use(flash());
+// app.use((req, res, next) => {
+//     res.locals.success_msgs = req.flash('success_msgs');
+//     res.locals.error_msgs = req.flash('error_msgs');
+//     next();
+// })
 
 app.use("/", require("./routes"));
 

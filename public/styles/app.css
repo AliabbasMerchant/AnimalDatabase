@@ -1,0 +1,132 @@
+@import url('https://fonts.googleapis.com/css?family=Noto+Serif+TC:400,600');
+
+* {
+    font-family: 'Noto Serif TC', serif;
+}
+
+.footer {
+    width: 100%;
+    padding: 50px;
+}
+
+.heading-1 {
+    font-weight: 300;
+    font-size: 2.5rem;
+}
+
+.heading-2 {
+    font-weight: 300;
+    font-size: 2rem;
+}
+
+.heading-3 {
+    font-weight: 300;
+    font-size: 1.5rem;
+}
+
+.heading-4 {
+    font-weight: 300;
+    font-size: 1.2rem;
+}
+
+.para-1 {
+    font-weight: 300;
+    font-size: 1.3rem;
+}
+
+.para-2 {
+    font-weight: 300;
+    font-size: 1.1rem;
+}
+
+.para-3 {
+    font-weight: 300;
+    font-size: 1rem;
+}
+
+.navbar {
+    /* position: fixed !important; */
+    width: 100%;
+    top: 0;
+    z-index: 1;
+}
+
+.body-content {
+    width: 100%;
+    /* margin-top: 56px; */
+}
+
+.fa, .far, .fas {
+    font-family: "Font Awesome 5 Free" !important;
+}
+
+.table-text-centered td {
+    text-align: center;
+}
+
+.table-text-centered th {
+    text-align: center;
+}
+
+.table-no-padding td {
+    padding: 0;
+}
+
+.table-no-padding th {
+    padding: 0;
+}
+
+.card-hoverable:hover {
+    box-shadow: 0 1px 10px 0 rgba(144, 170, 247, 1);
+}
+
+.jumbotron {
+    border-radius: 0 !important;
+}
+
+.dropdown-toggle::after {
+    display:none;
+}
+
+.golden-head {
+    font-size: 4.5rem !important;
+    color: #b57a34 !important;
+    padding-top: 50px !important;
+}
+
+.golden-head-mobile {
+    font-size: 3rem !important;
+    color: #b57a34 !important;
+    padding-top: 50px !important;
+}
+
+.right-content {
+    font-size: 1.2rem !important;
+    padding: 40px 20px 20px 20px !important;
+    font-weight: 300 !important;
+}
+
+.golden-button {
+    text-decoration: none !important;
+    border-radius: 0px !important;
+    color: #fff !important;
+    background-color: #b57a34 !important;
+    outline: none !important;
+    border: none !important;
+    margin: 40px 20px 20px 20px !important;
+    font-weight: 300 !important;
+    padding: 15px !important;
+    width: 200px !important;
+}
+
+.bold {
+    font-weight: 600 !important;
+}
+
+.dark-gray {
+    color: #555 !important;
+}
+
+.dark-gray:hover {
+    color: #000 !important;
+}
