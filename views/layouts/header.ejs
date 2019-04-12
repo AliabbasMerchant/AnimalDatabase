@@ -18,19 +18,51 @@
         </button>
         <div class="collapse navbar-collapse ml-auto" id="navbarSupportedContent">
             <ul class="navbar-nav  mr-auto">
-                <a class="nav-link dark-gray" href="/">Wildlife Database</a>
-                <a class="nav-link dark-gray" href="/animals/find">Find Animals</a>
-                <a class="nav-link dark-gray" href="/animals/all">All Animals</a>
-                <a class="nav-link dark-gray" href="/plants/find">Find Plants</a>
-                <a class="nav-link dark-gray" href="/plants/all">All Plants</a>
-                <a class="nav-link dark-gray" href="/areas">Areas</a>
+                <a class="dark-gray" href="/">Wildlife Database</a>
+                <li class="dropdown pl-2 mx-2">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Animal Species
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu pl-2">
+                        <li><a href="/animal_species/find">Find</a></li>
+                        <li><a href="/animal_species/all">All</a></li>
+                        <li><a href="/animal_species/add">Add</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown pl-2 mx-2">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Animals
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu pl-2">
+                        <li><a href="/animals/find">Find</a></li>
+                        <li><a href="/animals/all">All</a></li>
+                        <li><a href="/animals/add">Add</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown pl-2 mx-2">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Plant Species
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu pl-2">
+                        <li><a href="/plant_species/find">Find</a></li>
+                        <li><a href="/plant_species/all">All</a></li>
+                        <li><a href="/plant_species/add">Add</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown pl-2 mx-2">
+                    <a class="dropdown-toggle" data-toggle="dropdown">Plants
+                        <span class="caret"></span></a>
+                    <ul class="dropdown-menu pl-2">
+                        <li><a href="/plants/find">Find</a></li>
+                        <li><a href="/plants/all">All</a></li>
+                        <li><a href="/plants/add">Add</a></li>
+                    </ul>
+                </li>
+                <a class="dark-gray pl-2 mx-2" href="/areas">Areas</a>
             </ul>
             <ul class="navbar-nav  ml-auto">
                 <a class="nav-link dark-gray" href="/admin">Admin</a>
             </ul>
         </div>
     </nav>
-    <div>
-        <p></p>>
+    <div style="height:45px;">
+        <p></p>
     </div>
     <div class="body-content"></div>

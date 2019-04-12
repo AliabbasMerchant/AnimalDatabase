@@ -28,7 +28,7 @@ function create_tables(con) {
     );`;
     con.query(animal_species_table_sql, function (err, result) {
         if (err) throw err;
-        console.log(" Animal Species Table created");
+        console.log("Animal Species Table created");
     });
 
     var animal_table_sql =
@@ -44,7 +44,7 @@ function create_tables(con) {
         location POINT);`;
     con.query(animal_table_sql, function (err, result) {
         if (err) throw err;
-        console.log(" Animal Table created");
+        console.log("Animal Table created");
     });
 
     var plant_species_table_sql =
@@ -60,7 +60,7 @@ function create_tables(con) {
     );`;
     con.query(plant_species_table_sql, function (err, result) {
         if (err) throw err;
-        console.log(" Plant Species Table created");
+        console.log("Plant Species Table created");
     });
 
     var plants_table_sql =
@@ -110,6 +110,19 @@ app.use(express.urlencoded({
 //     next();
 // })
 
-app.use("/", require("./routes"));
+app.get("/", (req, res) => {
+    res.render("home");
+});
+app.get("/admin", (req, res) => {
+    res.render("admin/home");
+});
+app.use("/animals", require("./routes/animals"));
+app.use("/animal_species", require("./routes/animal_species"));
+app.use("/plants", require("./routes/plants"));
+app.use("/plant_species", require("./routes/plant_species"));
+app.use("/areas", require("./routes/areas"));
+app.get("/*", (req, res)=>{
+    res.redirect("/");
+});
 
 app.listen(process.env.PORT || 3000);

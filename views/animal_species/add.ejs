@@ -1,0 +1,59 @@
+<% include ../layouts/header %>
+
+<div class="container mt-3 text-dark">
+    <div class="row">
+        <div class="col-md-1 col-lg-2 col-xl-3"></div>
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <form action="/animal_species/add" method="POST">
+            <!-- FOR FORM WITH PHOTO <form action="/animal_species/add" method="POST" enctype="multipart/form-data"> -->
+                <div class="heading-2 text-center my-3">ADD ANIMAL SPECIES</div>
+                <% include ../layouts/messages %>
+                <div class="form-group">
+                    <label class="required" for="animal_species">Animal Species</label>
+                    <input type="text" class="form-control" id="animal_species" placeholder="Enter Animal Species Name"
+                        name="animal_species" value="<%= typeof animal_species != 'undefined' ? animal_species : '' %>">
+                </div>
+                <div class="form-group">
+                    <label class="required" for="common_name">Common Name</label>
+                    <input type="text" class="form-control" id="common_name" placeholder="Enter Common Name"
+                        name="common_name" value="<%= typeof common_name != 'undefined' ? common_name : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea type="text" class="form-control" rows="5" id="description" placeholder="Enter Description"
+                        name="description"><%= typeof description != 'undefined' ? description.trim() : '' %></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="_genus">Genus</label>
+                    <input type="text" class="form-control" id="_genus" placeholder="Enter Genus Name"
+                        name="_genus" value="<%= typeof _genus != 'undefined' ? _genus : '' %>">
+                </div>
+                <div class="form-group">
+                    <label class="required" for="_order">Order</label>
+                    <input type="text" class="form-control" id="_order" placeholder="Enter Order Name"
+                        name="_order" value="<%= typeof _order != 'undefined' ? _order : '' %>">
+                </div>
+                <div class="form-group">
+                    <label class="required" for="_class">Class</label>
+                    <input type="text" class="form-control" id="_class" placeholder="Enter Class Name"
+                        name="_class" value="<%= typeof _class != 'undefined' ? _class : '' %>">
+                </div>
+                <div class="form-group">
+                    <label class="required" for="_phylum">Phylum</label>
+                    <input type="text" class="form-control" id="_phylum" placeholder="Enter Phylum Name"
+                        name="_phylum" value="<%= typeof _phylum != 'undefined' ? _phylum : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="_status">Status</label>
+                    <input type="text" class="form-control" id="_status" placeholder="Enter Status"
+                        name="_status" value="<%= typeof _status != 'undefined' ? _status : '' %>">
+                </div>
+                
+
+                <button type="submit" class="btn btn-outline-dark pl-4 pr-4">Register</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include ../layouts/footer %>

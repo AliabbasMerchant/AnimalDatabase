@@ -130,3 +130,14 @@
 .dark-gray:hover {
     color: #000 !important;
 }
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0;
+}
+
+.required:after {
+    color: #e32;
+    content: ' *';
+    display:inline;
+}

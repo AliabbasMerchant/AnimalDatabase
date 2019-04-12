@@ -1,0 +1,10 @@
+- [ ] Complete the results page
+- [ ] Add the insert query to add animal_species
+- [ ] Test animal_species/add
+
+- [ ] Complete the pages for plants, plant_species, animals, areas, etc. Mostly the same as the animal_species page
+
+For adding the photos, call Ali. We need to use multer and form 'enctype="multipart/form-data"'
+
+Later:
+- [ ] Make the find pages
