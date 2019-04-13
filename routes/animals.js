@@ -31,7 +31,7 @@ router.post("/add", (req, res) => {
     animal_id += 1;
     const { name, dob, status, gender, description, photo, animal_species, location } = req.body;
     console.log(req.body);
-    let loc = location.split(' ');
+    // let loc = location.split(' ');
     let errors = [];
     if (!name, !dob, !gender, !photo, !animal_species)
         errors.push('Please fill in all required fields');

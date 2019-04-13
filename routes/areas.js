@@ -30,7 +30,7 @@ router.post("/add", (req, res) => {
     const { name, boundary } = req.body;
     console.log(req.body);
     let errors = [];
-    let polygon = boundary.split(' ');
+    // let polygon = boundary.split(' ');
     if (!name, !boundary)
         errors.push('Please fill in all required fields');
     if (errors.length > 0)
