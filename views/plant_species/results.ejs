@@ -1,12 +1,12 @@
 <% include ../layouts/header %>
 
 <div class="container">
-    <div class="heading-1 text-center mt-3">All Animal Species</div>
+    <div class="heading-1 text-center mt-3">All Plant Species</div>
     <% include ../layouts/messages %>
     <table class="table table-bordered table-text-centered table-no-padding mt-3">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Animal Species</th>
+                <th scope="col">Plant Species</th>
                 <th scope="col">Common Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Genus</th>
@@ -20,7 +20,7 @@
         <tbody>
             <% results.forEach(result => { %>
             <tr>
-                <td><%= result.animal_species %></td>
+                <td><%= result.plant_species %></td>
                 <td><%= result.common_name %></td>
                 <td><%= result.description %></td>
                 <td><%= result._genus %></td>

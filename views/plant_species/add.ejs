@@ -4,14 +4,14 @@
     <div class="row">
         <div class="col-md-1 col-lg-2 col-xl-3"></div>
         <div class="col-md-10 col-lg-8 col-xl-6">
-            <form action="/animal_species/add" method="POST">
+            <form action="/plant_species/add" method="POST">
             <!-- FOR FORM WITH PHOTO <form action="/animal_species/add" method="POST" enctype="multipart/form-data"> -->
-                <div class="heading-2 text-center my-3">ADD ANIMAL SPECIES</div>
+                <div class="heading-2 text-center my-3">ADD PLANT SPECIES</div>
                 <% include ../layouts/messages %>
                 <div class="form-group">
-                    <label class="required" for="animal_species">Animal Species</label>
-                    <input type="text" class="form-control" id="animal_species" placeholder="Enter Animal Species Name"
-                        name="animal_species" value="<%= typeof animal_species != 'undefined' ? animal_species : '' %>">
+                    <label class="required" for="plant_species">Plant Species</label>
+                    <input type="text" class="form-control" id="plant_species" placeholder="Enter Plant Species Name"
+                        name="plant_species" value="<%= typeof plant_species != 'undefined' ? plant_species : '' %>">
                 </div>
                 <div class="form-group">
                     <label class="required" for="common_name">Common Name</label>

@@ -1,0 +1,26 @@
+<% include ../layouts/header %>
+
+<div class="container">
+    <div class="heading-1 text-center mt-3">All Areas</div>
+    <% include ../layouts/messages %>
+    <table class="table table-bordered table-text-centered table-no-padding mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Boundary</th>
+            </tr>
+        </thead>
+        <% if (results) { %>
+        <tbody>
+            <% results.forEach(result => { %>
+            <tr>
+                <td><%= result.name %></td>
+                <td><%= result.boundary %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+        <% } %>
+    </table>
+</div>
+
+<% include ../layouts/footer %>

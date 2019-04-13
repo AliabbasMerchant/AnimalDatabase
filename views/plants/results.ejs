@@ -1,0 +1,36 @@
+<% include ../layouts/header %>
+
+<div class="container">
+    <div class="heading-1 text-center mt-3">All Plants</div>
+    <% include ../layouts/messages %>
+    <table class="table table-bordered table-text-centered table-no-padding mt-3">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">Plant ID</th>
+                <th scope="col">Description</th>
+                <th scope="col">Number</th>
+                <th scope="col">Status</th>
+                <th scope="col">Photo</th>
+                <th scope="col">Plant Species</th>
+                <th scope="col">Location</th>
+            </tr>
+        </thead>
+        <% if (results) { %>
+        <tbody>
+            <% results.forEach(result => { %>
+            <tr>
+                <td><%= result.plant_id %></td>
+                <td><%= result.description %></td>
+                <td><%= result.number %></td>
+                <td><%= result.status %></td>
+                <td><%= result.photo %></td>
+                <td><%= result.animal_species %></td>
+                <td><%= result.location %></td>
+            </tr>
+            <% }); %>
+        </tbody>
+        <% } %>
+    </table>
+</div>
+
+<% include ../layouts/footer %>
