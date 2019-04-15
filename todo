@@ -1,6 +1,6 @@
 - [ X ] Complete the results page // JUST CHECK IT ONCE.
-- [ ] Add the insert query to add animal_species
-- [ ] Test animal_species/add
+- [ X ] Add the insert query to add animal_species
+- [ X ] Test animal_species/add
 
 - [ X ] Complete the pages for plants, plant_species, animals, areas, etc. Mostly the same as the animal_species page
 

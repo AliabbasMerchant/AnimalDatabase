@@ -28,11 +28,11 @@ router.get("/add", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-    plant_id += 1;
+    // plant_id += 1; I think not needed
     const { description, number, status, photo, plant_species, location } = req.body;
     console.log(req.body);
     let errors = [];
-    let loc = location.split(' ');
+    // let loc = location.split(' '); Not working !!!!!
     if (!number, !photo, !plant_species, !location)
         errors.push('Please fill in all required fields');
     // FOR PHOTO, use multer @Ali will do it wherever required
@@ -42,15 +42,22 @@ router.post("/add", (req, res) => {
     if (errors.length > 0)
         res.render("plants/add", { errors, description, number, status, photo, plant_species, location });
     else {
-        let sql = ``;
+        let sql = `INSERT INTO ${constants.plants_table} 
+                    (
+                        description, number, status, photo, plant_species, location
+                    ) 
+                    VALUES 
+                    (
+                        ?, ?, ?, ?, ?, ?
+                    )`;
         // TODO Insert statement
         // Be sure that if something is empty, we put in NULL, and not 
         //Consider plant_id while passing
         //Consider loc array for latitude and longitude
-        con.query('', function (err, result) {
+        con.query(sql, [description, number, status, photo, plant_species, location], function (err, result) {
             if (err) console.log(err);       
             else {
-                req.flash('success_msgs', 'Plant added.');
+                // req.flash('success_msgs', 'Plant added.');
                 res.redirect('/admin');
             }
         });

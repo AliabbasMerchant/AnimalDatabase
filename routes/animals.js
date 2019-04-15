@@ -28,10 +28,10 @@ router.get("/add", (req, res) => {
 });
 
 router.post("/add", (req, res) => {
-    animal_id += 1;
+    // animal_id += 1;  I think not needed 
     const { name, dob, status, gender, description, photo, animal_species, location } = req.body;
     console.log(req.body);
-    // let loc = location.split(' ');
+    // let loc = location.split(' '); This is giving some error
     let errors = [];
     if (!name, !dob, !gender, !photo, !animal_species)
         errors.push('Please fill in all required fields');
@@ -42,15 +42,22 @@ router.post("/add", (req, res) => {
     if (errors.length > 0)
         res.render("animals/add", { errors, name, dob, status, gender, description, photo, animal_species, location });
     else {
-        let sql = ``;
+        let sql = `INSERT INTO ${constants.animals_table} 
+                    (
+                        name, dob, status, gender, description, photo, animal_species, location
+                    ) 
+                    VALUES 
+                    (
+                        ?, ?, ?, ?, ?, ?, ?, ?
+                    )`;
         // TODO Insert statement
         // Be sure that if something is empty, we put in NULL, and not 
         //Consider here animal_id also while passing;
         //Consider the loc array for latitude and longitude
-        con.query('', function (err, result) {
+        con.query(sql, [name, dob, status, gender, description, photo, animal_species, location], function (err, result) {
             if (err) console.log(err);       
             else {
-                req.flash('success_msgs', 'Animal added.');
+                // req.flash('success_msgs', 'Animal added.');
                 res.redirect('/admin');
             }
         });
