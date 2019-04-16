@@ -3,7 +3,7 @@ const mysql = require('mysql');
 const constants = require('../constants');
 const secrets = require('../secrets');
 
-var router = express.Router();
+var router = express.Router({ mergeParams: true });
 
 const con = mysql.createConnection({
     host: secrets.sql_host,
