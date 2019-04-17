@@ -16,9 +16,9 @@
                 <th scope="col">Status</th>
             </tr>
         </thead>
-        <% if (results) { %>
+        <% if (result) { %>
         <tbody>
-            <% results.forEach(result => { %>
+            <% result.forEach(result => { %>
             <tr>
                 <td><%= result.animal_species %></td>
                 <td><%= result.common_name %></td>
