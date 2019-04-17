@@ -18,7 +18,7 @@ router.get("/find", (req, res) => {
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.area_table}`, (err, result) => {
-        res.send(result);
+        res.render("areas/results",{result});
     });
 });
 

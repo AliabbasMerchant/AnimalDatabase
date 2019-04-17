@@ -19,7 +19,7 @@ router.get("/find", (req, res) => {
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.plants_table}`, (err, result) => {
-        res.send(result);
+        res.render("plants/results",{result});
     });
 });
 

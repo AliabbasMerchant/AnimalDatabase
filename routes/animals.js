@@ -22,7 +22,7 @@ router.get("/find", (req, res) => {
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.animals_table}`, (err, result) => {
-        res.send(result);
+        res.render("animals/results",{result});
     });
 });
 
