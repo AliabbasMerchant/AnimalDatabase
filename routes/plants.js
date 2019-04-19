@@ -32,7 +32,7 @@ router.post("/add", (req, res) => {
     const { description, number, status, photo, plant_species, location } = req.body;
     console.log(req.body);
     let errors = [];
-    // let loc = location.split(' '); Not working !!!!!
+    let loc = String(location).split(' '); //Not working !!!!!
     if (!number, !photo, !plant_species, !location)
         errors.push('Please fill in all required fields');
     // FOR PHOTO, use multer @Ali will do it wherever required
