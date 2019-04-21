@@ -1,0 +1,72 @@
+<% include ../layouts/header %>
+
+<div class="container mt-3 text-dark">
+    <div class="row">
+        <div class="col-md-1 col-lg-2 col-xl-3"></div>
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <form action="/plant_species/find" method="POST">
+                <div class="heading-2 text-center my-3">FIND PLANT SPECIES</div>
+                <% include ../layouts/messages %>
+                <div class="form-group">
+                    <label for="plant_species">Plant Species</label>
+                    <input type="text" class="form-control" id="plant_species" placeholder="Enter Plant Species Name"
+                        name="plant_species" value="<%= typeof plant_species != 'undefined' ? plant_species : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="common_name">Common Name</label>
+                    <input type="text" class="form-control" id="common_name" placeholder="Enter Common Name"
+                        name="common_name" value="<%= typeof common_name != 'undefined' ? common_name : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="_genus">Genus</label>
+                    <input type="text" class="form-control" id="_genus" placeholder="Enter Genus Name"
+                        name="_genus" value="<%= typeof _genus != 'undefined' ? _genus : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="_order">Order</label>
+                    <input type="text" class="form-control" id="_order" placeholder="Enter Order Name"
+                        name="_order" value="<%= typeof _order != 'undefined' ? _order : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="_class">Class</label>
+                    <input type="text" class="form-control" id="_class" placeholder="Enter Class Name"
+                        name="_class" value="<%= typeof _class != 'undefined' ? _class : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="_phylum">Phylum</label>
+                    <input type="text" class="form-control" id="_phylum" placeholder="Enter Phylum Name"
+                        name="_phylum" value="<%= typeof _phylum != 'undefined' ? _phylum : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="_status">Status</label>
+                    <input type="text" class="form-control" id="_status" placeholder="Enter Status"
+                        name="_status" value="<%= typeof _status != 'undefined' ? _status : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="sort">Sort By</label>
+                    <select class="form-control" id="sort" name="sort">
+                        <option selected="selected" value="plant_species">Plant Species</option>
+                        <option value="common_name">Common Name</option>
+                        <option value="_genus">Genus</option>
+                        <option value="_order">Order</option>
+                        <option value="_class">Class</option>
+                        <option value="_phylum">Phylum</option>
+                        <option value="_status">Status</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="skip">Number of Results to Skip</label>
+                    <input type="number" class="form-control" id="skip" name="skip" value="0">
+                </div>
+                <div class="form-group">
+                    <label for="limit">Number of Results</label>
+                    <input type="number" class="form-control" id="limit" name="limit" value="100">
+                </div>
+                
+                <button type="submit" class="btn btn-outline-dark pl-4 pr-4">Find</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include ../layouts/footer %>

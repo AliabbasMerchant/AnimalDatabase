@@ -16,22 +16,28 @@
                 <th scope="col">Status</th>
             </tr>
         </thead>
-        <% if (result) { %>
         <tbody>
-            <% result.forEach(result => { %>
-            <tr>
-                <td><%= result.plant_species %></td>
-                <td><%= result.common_name %></td>
-                <td><%= result.description %></td>
-                <td><%= result._genus %></td>
-                <td><%= result._order %></td>
-                <td><%= result._class %></td>
-                <td><%= result._phylum %></td>
-                <td><%= result._status %></td>
-            </tr>
-            <% }); %>
+            <% if (result.length > 0) { %>
+                <% result.forEach(result => { %>
+                <tr>
+                    <td><%= result.plant_species %></td>
+                    <td><%= result.common_name %></td>
+                    <td><%= result.description %></td>
+                    <td><%= result._genus %></td>
+                    <td><%= result._order %></td>
+                    <td><%= result._class %></td>
+                    <td><%= result._phylum %></td>
+                    <td><%= result._status %></td>
+                </tr>
+                <% }); %>    
+            <% } else { %>
+                <tr>
+                    <td colspan="8">
+                        Not found
+                    </td>
+                </tr>
+            <% } %>
         </tbody>
-        <% } %>
     </table>
 </div>
 

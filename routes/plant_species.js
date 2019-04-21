@@ -16,9 +16,31 @@ router.get("/find", (req, res) => {
     res.render("plant_species/find");
 });
 
+router.post("/find", (req, res) => {
+    let where_clause = '';
+    for (var property in req.body) {
+        if (req.body.hasOwnProperty(property)) {
+            if(req.body[property] != '' && property!='sort' && property!= 'limit' && property!= 'skip') {
+                if(where_clause == '') {
+                    where_clause = 'WHERE ';
+                }
+                where_clause += `${property}="${req.body[property]}" AND `;
+            }
+        }
+    }
+    where_clause = where_clause.slice(0, -5);
+    let sql = `SELECT * FROM ${constants.plant_species_table} ${where_clause} ORDER BY ${req.body.sort} LIMIT ${req.body.limit} OFFSET ${req.body.skip};`;
+    console.log(sql);
+    con.query(sql, (err, result) => {
+        if(err) console.log(err);
+        else res.render("plant_species/results", { result });
+    });
+});
+
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.plant_species_table}`, (err, result) => {
-        res.render("plant_species/results",{result});
+        if(err) console.log(err);
+        else res.render("plant_species/results",{result});
     });
 });
 
