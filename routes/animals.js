@@ -6,7 +6,6 @@ const multer = require('multer');
 const fs = require('fs');
 
 const upload = multer();
-
 var router = express.Router({ mergeParams: true });
 
 const con = mysql.createConnection({
@@ -17,31 +16,59 @@ const con = mysql.createConnection({
 });
 
 router.get("/find", (req, res) => {
-    res.render("animals/find");
+    con.query(`SELECT DISTINCT animal_species FROM ${constants.animals_table}`, (err, animal_species) => {
+        if (err) console.log(err);
+        else res.render("animals/find", { animal_species });
+    });
+});
+
+router.post("/find", (req, res) => {
+    let where_clause = '';
+    for (var property in req.body) {
+        if (req.body.hasOwnProperty(property)) {
+            if (req.body[property] != '' && property != 'sort' && property != 'limit' && property != 'skip') {
+                if (where_clause == '') {
+                    where_clause = 'WHERE ';
+                }
+                where_clause += `${property}="${req.body[property]}" AND `;
+            }
+        }
+    }
+    where_clause = where_clause.slice(0, -5);
+    let sql = `SELECT * FROM ${constants.animals_table} ${where_clause} ORDER BY ${req.body.sort} LIMIT ${req.body.limit} OFFSET ${req.body.skip};`;
+    console.log(sql);
+    con.query(sql, (err, result) => {
+        if (err) console.log(err);
+        else res.render("animals/results", { result });
+    });
 });
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.animals_table}`, (err, result) => {
-        res.render("animals/results",{result});
+        if (err) console.log(err);
+        else res.render("animals/results", { result });
     });
 });
 
 router.get("/add", (req, res) => {
-    res.render("animals/add");
+    con.query(`SELECT animal_species FROM ${constants.animal_species_table};`, (err, animal_species) => {
+        if (err) console.log(err);
+        else res.render("animals/add", { animal_species });
+    });
 });
 
 router.post("/add", upload.single("file"), (req, res) => {
-    const { name, dob, status, gender, description, photo, animal_species, location } = req.body;
+    const { name, dob, status, gender, description, animal_species, location } = req.body;
     console.log(req.body);
     let loc = String(location).split(' '); // This is giving some error
     let errors = [];
-    if (!name, !dob, !gender, !photo, !animal_species)
+    if (!name, !dob, !gender, !animal_species)
         errors.push('Please fill in all required fields');
     if (req.file)
         if (req.file.size > 2000 * 1000)
             errors.push('Cannot upload files greater than 2 MB');
     if (errors.length > 0)
-        res.render("animals/add", { errors, name, dob, status, gender, description, photo, animal_species, location });
+        res.render("animals/add", { errors, name, dob, status, gender, description, animal_species, location });
     else {
         let photo = '';
         if (req.file)
@@ -51,17 +78,13 @@ router.post("/add", upload.single("file"), (req, res) => {
             };
         let sql = `INSERT INTO ${constants.animals_table} 
                     (
-                        name, dob, status, gender, description, photo, animal_species, location
+                        name, dob, status, gender, description, animal_species, location
                     ) 
                     VALUES 
                     (
-                        ?, ?, ?, ?, ?, ?, ?, POINT(?, ?)
+                        ?, ?, ?, ?, ?, ?, POINT(?, ?)
                     )`;
-        // TODO Insert statement
-        // Be sure that if something is empty, we put in NULL, and not 
-        //Consider here animal_id also while passing;
-        //Consider the loc array for latitude and longitude
-        con.query(sql, [name, dob, status, gender, description, photo, animal_species, loc[0], loc[1]], function (err, result) {
+        con.query(sql, [name, dob, status, gender, description, animal_species, loc[0], loc[1]], function (err, result) {
             if (err) console.log(err);
             else {
                 // req.flash('success_msgs', 'Animal added.');
@@ -70,4 +93,5 @@ router.post("/add", upload.single("file"), (req, res) => {
         });
     }
 });
+
 module.exports = router;

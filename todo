@@ -4,7 +4,12 @@
 
 - [ X ] Complete the pages for plants, plant_species, animals, areas, etc. Mostly the same as the animal_species page
 
-For adding the photos, call Ali. We need to use multer and form 'enctype="multipart/form-data"'
 
 Later:
 - [ ] Make the find pages
+
+- [ ] Status and Gender need to be a dropdown
+- [X] So does animal_species, in case of animals
+- [ ] So does plant_species, in case of plants
+
+- [ ] Add option to edit

@@ -2,9 +2,11 @@ const express = require("express");
 const mysql = require('mysql');
 const constants = require('../constants');
 const secrets = require('../secrets');
+const multer = require('multer');
+const fs = require('fs');
 
+const upload = multer();
 var router = express.Router({ mergeParams: true });
-var plant_id = 0;
 
 const con = mysql.createConnection({
     host: secrets.sql_host,
@@ -14,47 +16,76 @@ const con = mysql.createConnection({
 });
 
 router.get("/find", (req, res) => {
-    res.render("plants/find");
+    con.query(`SELECT DISTINCT plant_species FROM ${constants.plants_table}`, (err, plant_species) => {
+        if (err) console.log(err);
+        else res.render("plants/find", { plant_species });
+    });
+});
+
+router.post("/find", (req, res) => {
+    let where_clause = '';
+    for (var property in req.body) {
+        if (req.body.hasOwnProperty(property)) {
+            if (req.body[property] != '' && property != 'sort' && property != 'limit' && property != 'skip') {
+                if (where_clause == '') {
+                    where_clause = 'WHERE ';
+                }
+                if(property == "number") where_clause += `${property}=${req.body[property]} AND `;
+                else where_clause += `${property}="${req.body[property]}" AND `;
+            }
+        }
+    }
+    where_clause = where_clause.slice(0, -5);
+    let sql = `SELECT * FROM ${constants.plants_table} ${where_clause} ORDER BY ${req.body.sort} LIMIT ${req.body.limit} OFFSET ${req.body.skip};`;
+    console.log(sql);
+    con.query(sql, (err, result) => {
+        if (err) console.log(err);
+        else res.render("plants/results", { result });
+    });
 });
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.plants_table}`, (err, result) => {
-        res.render("plants/results",{result});
+        if(err) console.log(err);
+        else res.render("plants/results",{result});
     });
 });
 
 router.get("/add", (req, res) => {
-    res.render("plants/add");
+    con.query(`SELECT plant_species FROM ${constants.plant_species_table};`, (err, plant_species) => {
+        if (err) console.log(err);
+        else res.render("plants/add", { plant_species });
+    });
 });
 
-router.post("/add", (req, res) => {
-    // plant_id += 1; I think not needed
-    const { description, number, status, photo, plant_species, location } = req.body;
+router.post("/add", upload.single("file"), (req, res) => {
+    const { description, number, status, plant_species, location } = req.body;
     console.log(req.body);
     let errors = [];
     let loc = String(location).split(' '); //Not working !!!!!
-    if (!number, !photo, !plant_species, !location)
+    if (!number, !plant_species, !location)
         errors.push('Please fill in all required fields');
-    // FOR PHOTO, use multer @Ali will do it wherever required
-    // if (req.file) 
-    //     if (req.file.size > 2000 * 1000)
-    //         errors.push('Cannot upload files greater than 2 MB');
+    if (req.file) 
+        if (req.file.size > 2000 * 1000)
+            errors.push('Cannot upload files greater than 2 MB');
     if (errors.length > 0)
-        res.render("plants/add", { errors, description, number, status, photo, plant_species, location });
+        res.render("plants/add", { errors, description, number, status, plant_species, location });
     else {
+        let photo = '';
+        if (req.file)
+            photo = {
+                data: req.file.buffer,
+                contentType: req.file.mimetype
+            };
         let sql = `INSERT INTO ${constants.plants_table} 
                     (
-                        description, number, status, photo, plant_species, location
+                        description, number, status, plant_species, location
                     ) 
                     VALUES 
                     (
-                        ?, ?, ?, ?, ?, ?
+                        ?, ?, ?, ?, POINT(?, ?)
                     )`;
-        // TODO Insert statement
-        // Be sure that if something is empty, we put in NULL, and not 
-        //Consider plant_id while passing
-        //Consider loc array for latitude and longitude
-        con.query(sql, [description, number, status, photo, plant_species, location], function (err, result) {
+        con.query(sql, [description, number, status, plant_species, loc[0], loc[1]], function (err, result) {
             if (err) console.log(err);       
             else {
                 // req.flash('success_msgs', 'Plant added.');

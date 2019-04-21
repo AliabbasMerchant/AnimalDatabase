@@ -5,7 +5,6 @@
         <div class="col-md-1 col-lg-2 col-xl-3"></div>
         <div class="col-md-10 col-lg-8 col-xl-6">
             <form action="/plants/add" method="POST" enctype="multipart/form-data">
-            <!-- FOR FORM WITH PHOTO <form action="/animal_species/add" method="POST" enctype="multipart/form-data"> -->
                 <div class="heading-2 text-center my-3">ADD PLANTS</div>
                 <% include ../layouts/messages %>
                 <div class="form-group">
@@ -24,14 +23,18 @@
                         name="status" value="<%= typeof status != 'undefined' ? status : '' %>">
                 </div>
                 <div class="form-group">
-                    <label class="required" for="photo">Photo</label>
-                    <input type="file" class="form-control" id="photo" placeholder="Select Photograph"
-                        name="photo">
+                    <label for="file">Photo</label>
+                    <br>
+                    <input type="file" id="file" name="file"
+                        value="<%= typeof file != 'undefined' ? file : '' %>">
                 </div>
                 <div class="form-group">
                     <label class="required" for="plant_species">Plant Species</label>
-                    <input type="text" class="form-control" id="plant_species" placeholder="Enter Plant Species"
-                        name="plant_species" value="<%= typeof plant_species != 'undefined' ? plant_species : '' %>">
+                    <select class="form-control" id="plant_species" name="plant_species">
+                        <% plant_species.forEach((species) => { %>
+                            <option value="<%= species %>"><%= species %></option>
+                        <% }); %>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label class="required" for="location">Location</label>

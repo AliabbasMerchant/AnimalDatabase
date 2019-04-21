@@ -6,30 +6,26 @@
     <table class="table table-bordered table-text-centered table-no-padding mt-3">
         <thead class="thead-dark">
             <tr>
-                <th scope="col">Plant ID</th>
                 <th scope="col">Description</th>
                 <th scope="col">Number</th>
                 <th scope="col">Status</th>
-                <th scope="col">Photo</th>
                 <th scope="col">Plant Species</th>
-                <th scope="col">Location</th>
             </tr>
         </thead>
-        <% if (result) { %>
         <tbody>
-            <% result.forEach(result => { %>
-            <tr>
-                <td><%= result.plant_id %></td>
-                <td><%= result.description %></td>
-                <td><%= result.number %></td>
-                <td><%= result.status %></td>
-                <td><%= result.photo %></td>
-                <td><%= result.animal_species %></td>
-                <td><%= result.location %></td>
-            </tr>
-            <% }); %>
+            <% if (result.length > 0) { %>
+                <% result.forEach(result => { %>
+                <tr>
+                    <td><%= result.description %></td>
+                    <td><%= result.number %></td>
+                    <td><%= result.status %></td>
+                    <td><%= result.animal_species %></td>
+                </tr>
+                <% }); %>
+            <% } else { %>
+                <tr> <td colspan="6"> Not found </td> </tr>
+            <% } %>
         </tbody>
-        <% } %>
     </table>
 </div>
 
