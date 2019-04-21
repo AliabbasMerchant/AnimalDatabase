@@ -43,14 +43,14 @@ router.post("/add", (req, res) => {
                     ) 
                     VALUES
                     (
-                        ?, POLYGON((?))
+                        ?, ST_GeomFromText("POLYGON((${boundary}))")
                     )`;
         // Consider the polygon for boundary points
-        con.query(sql, [name, boundary], function (err, result) {
+        con.query(sql, [name], function (err, result) {
             if (err) console.log(err);       
             else {
                 // req.flash('success_msgs', 'Areas added.');
-                res.redirect('back');
+                res.redirect('/areas/all');
             }
         });
     }

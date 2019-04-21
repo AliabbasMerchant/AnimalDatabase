@@ -14,15 +14,18 @@
                 </div>
                 <div class="form-group">
                     <label for="status">Status</label>
-                    <input type="text" class="form-control" id="status" placeholder="Enter Status"
-                        name="status" value="<%= typeof status != 'undefined' ? status : '' %>">
+                    <select class="form-control" id="status" name="status">
+                        <option value="Normal">Normal</option>
+                        <option value="Endangered">Endangered</option>
+                        <option value="Extinct">Extinct</option>
+                    </select>
                 </div>
                 <% if(plant_species.length > 0) { %>
                 <div class="form-group">
                     <label for="plant_species">Plant Species</label>
                     <select class="form-control" id="plant_species" name="plant_species">
                         <% plant_species.forEach((species) => { %>
-                            <option value="<%= species %>"><%= species %></option>
+                            <option value="<%= species.plant_species %>"><%= species.plant_species %></option>
                         <% }); %>
                     </select>
                 </div>

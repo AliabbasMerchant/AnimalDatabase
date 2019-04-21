@@ -13,21 +13,26 @@
                         name="name" value="<%= typeof name != 'undefined' ? name : '' %>">
                 </div>
                 <div class="form-group">
-                    <label for="_order">Status</label>
-                    <input type="text" class="form-control" id="status" placeholder="Enter Status"
-                        name="status" value="<%= typeof status != 'undefined' ? status : '' %>">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <option value="Normal">Normal</option>
+                        <option value="Endangered">Endangered</option>
+                        <option value="Extinct">Extinct</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <label for="gender">Gender</label>
-                    <input type="text" class="form-control" id="gender" placeholder="Enter Gender"
-                        name="gender" value="<%= typeof gender != 'undefined' ? gender : '' %>">
+                    <select class="form-control" id="gender" name="gender">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                    </select>
                 </div>
                 <% if(animal_species.length > 0) { %>
                 <div class="form-group">
                     <label for="animal_species">Animal Species</label>
                     <select class="form-control" id="animal_species" name="animal_species">
                         <% animal_species.forEach((species) => { %>
-                            <option value="<%= species %>"><%= species %></option>
+                            <option value="<%= species.animal_species %>"><%= species.animal_species %></option>
                         <% }); %>
                     </select>
                 </div>

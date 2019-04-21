@@ -15,7 +15,7 @@
             <% result.forEach(result => { %>
             <tr>
                 <td><%= result.name %></td>
-                <td><%= result.boundary %></td>
+                <td><%= JSON.stringify(result.boundary[0]) %></td>
             </tr>
             <% }); %>
         <% } else { %>

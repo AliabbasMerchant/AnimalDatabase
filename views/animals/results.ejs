@@ -17,9 +17,9 @@
         <tbody>
             <% if (result.length > 0) { %>
                 <% result.forEach(result => { %>
-                    <tr>
-                        <td><%= result.name %></td>
-                        <td><%= result.dob %></td>
+                    <tr onclick="window.location='/animals/show/<%= result.animal_id %>';">
+                        <td ><%= result.name %></td>
+                        <td><%= new Date(result.dob).toDateString() %></td>
                         <td><%= result.status %></td>
                         <td><%= result.gender %></td>
                         <td><%= result.description %></td>

@@ -39,7 +39,7 @@ function create_tables(con) {
         status VARCHAR(100),
         gender VARCHAR(100),
         description TEXT,
-        photo BLOB, 
+        photo MEDIUMBLOB, 
         animal_species VARCHAR(255) NOT NULL REFERENCES animal_species(animal_species),
         location POINT);`;
     con.query(animal_table_sql, function (err, result) {
@@ -69,7 +69,6 @@ function create_tables(con) {
         description TEXT,
         number INT, 
         status VARCHAR(100),
-        photo BLOB, 
         plant_species VARCHAR(255) REFERENCES plant_species(plant_species),
         location POINT);`;
     con.query(plants_table_sql, function (err, result) {

@@ -15,8 +15,30 @@ const con = mysql.createConnection({
     database: constants.db
 });
 
+router.get("/show/:id", (req, res) => {
+    con.query(`SELECT * FROM ${constants.animals_table} WHERE animal_id=${req.params.id}`, (err, animal) => {
+        if (err) console.log(err);
+        else res.render("animals/show", { animal: animal[0] });
+    });
+});
+
+router.get("/edit/:id", (req, res) => {
+    con.query(`SELECT * FROM ${constants.animals_table} WHERE animal_id=${req.params.id}`, (err, animal) => {
+        if (err) console.log(err);
+        else {
+            con.query(`SELECT animal_species FROM ${constants.animal_species_table};`, (err, all_species) => {
+                if (err) console.log(err);
+                else {
+                    const { name, dob, status, gender, description, animal_species, location, animal_id } = animal[0];
+                    res.render("animals/edit", { name, dob, status, gender, description, animal_species, location, animal_id, all_species });
+                }
+            });
+        }
+    });
+});
+
 router.get("/find", (req, res) => {
-    con.query(`SELECT DISTINCT animal_species FROM ${constants.animals_table}`, (err, animal_species) => {
+    con.query(`SELECT animal_species FROM ${constants.animal_species_table}`, (err, animal_species) => {
         if (err) console.log(err);
         else res.render("animals/find", { animal_species });
     });
@@ -59,7 +81,6 @@ router.get("/add", (req, res) => {
 
 router.post("/add", upload.single("file"), (req, res) => {
     const { name, dob, status, gender, description, animal_species, location } = req.body;
-    console.log(req.body);
     let loc = String(location).split(' '); // This is giving some error
     let errors = [];
     if (!name, !dob, !gender, !animal_species)
@@ -72,26 +93,83 @@ router.post("/add", upload.single("file"), (req, res) => {
     else {
         let photo = '';
         if (req.file)
-            photo = {
-                data: req.file.buffer,
-                contentType: req.file.mimetype
-            };
-        let sql = `INSERT INTO ${constants.animals_table} 
+            // photo = JSON.stringify({
+            //     data: req.file.buffer,
+            //     contentType: req.file.mimetype
+            // });
+            photo = req.file.buffer;
+        var sql = `INSERT INTO ${constants.animals_table} 
                     (
-                        name, dob, status, gender, description, animal_species, location
+                        name, dob, status, gender, photo, description, animal_species, location
                     ) 
                     VALUES 
                     (
-                        ?, ?, ?, ?, ?, ?, POINT(?, ?)
+                        ?, ?, ?, ?, ?, ?, ?, POINT(?, ?)
                     )`;
-        con.query(sql, [name, dob, status, gender, description, animal_species, loc[0], loc[1]], function (err, result) {
-            if (err) console.log(err);
+        con.query(sql, [name, dob, status, gender, photo, description, animal_species, loc[0], loc[1]], function (err, result) {
+            if (err) {
+                console.log(err.sqlMessage);
+            }
             else {
                 // req.flash('success_msgs', 'Animal added.');
-                res.redirect('back');
+                res.redirect('/animals/all');
             }
         });
     }
+});
+
+router.post("/edit/:id", upload.single("file"), (req, res) => {
+    const { name, dob, status, gender, description, animal_species, location } = req.body;
+    let loc = String(location).split(' '); // This is giving some error
+    let errors = [];
+    if (!name, !dob, !gender, !animal_species)
+        errors.push('Please fill in all required fields');
+    if (req.file)
+        if (req.file.size > 2000 * 1000)
+            errors.push('Cannot upload files greater than 2 MB');
+    if (errors.length > 0)
+        res.render("animals/add", { errors, name, dob, status, gender, description, animal_species, location });
+    else {
+        if (req.file) {
+            let photo = req.file.buffer;
+            var sql = `UPDATE ${constants.animals_table} SET name="${name}", dob="${dob}", status="${status}", gender="${gender}", description="${description}", photo=?, animal_species="${animal_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE animal_id=${req.params.id}`;
+            con.query(sql, [photo], function (err, result) {
+                if (err) console.log(err.message);
+                else {
+                    res.redirect('/animals/all');
+                }
+            });
+        } else {
+            var sql = `UPDATE ${constants.animals_table} SET name="${name}", dob="${dob}", status="${status}", gender="${gender}", description="${description}", animal_species="${animal_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE animal_id=${req.params.id}`;
+            con.query(sql, function (err, result) {
+                if (err) console.log(err.message);
+                else {
+                    res.redirect('/animals/all');
+                }
+            });
+        }
+
+    }
+});
+
+router.get("/image/:id", (req, res) => {
+    con.query(`SELECT photo FROM ${constants.animals_table} WHERE animal_id=${req.params.id};`, (err, animal) => {
+        if (err) {
+            console.log(err);
+            res.send('');
+        }
+        if (animal[0].photo != '') {
+            // photo = JSON.parse(animal[0].photo);
+            // res.contentType(photo.contentType);
+            // res.send(photo.data);
+            res.contentType("image/png");
+            res.send(animal[0].photo);
+        } else {
+            res.send('');
+            // res.contentType("image/png");
+            // res.send(fs.readFileSync("public/assets/mentor/mentor_profile.png"));
+        }
+    });
 });
 
 module.exports = router;

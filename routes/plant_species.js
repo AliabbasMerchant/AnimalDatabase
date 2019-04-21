@@ -71,7 +71,7 @@ router.post("/add", (req, res) => {
             if (err) console.log(err);       
             else {
                 // req.flash('success_msgs', 'Plant Species added.');
-                res.redirect('back');
+                res.redirect('/plant_species/all');
             }
         });
     }

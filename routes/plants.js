@@ -2,10 +2,7 @@ const express = require("express");
 const mysql = require('mysql');
 const constants = require('../constants');
 const secrets = require('../secrets');
-const multer = require('multer');
-const fs = require('fs');
 
-const upload = multer();
 var router = express.Router({ mergeParams: true });
 
 const con = mysql.createConnection({
@@ -16,7 +13,7 @@ const con = mysql.createConnection({
 });
 
 router.get("/find", (req, res) => {
-    con.query(`SELECT DISTINCT plant_species FROM ${constants.plants_table}`, (err, plant_species) => {
+    con.query(`SELECT plant_species FROM ${constants.plant_species_table}`, (err, plant_species) => {
         if (err) console.log(err);
         else res.render("plants/find", { plant_species });
     });
@@ -58,25 +55,16 @@ router.get("/add", (req, res) => {
     });
 });
 
-router.post("/add", upload.single("file"), (req, res) => {
+router.post("/add", (req, res) => {
     const { description, number, status, plant_species, location } = req.body;
     console.log(req.body);
     let errors = [];
     let loc = String(location).split(' '); //Not working !!!!!
     if (!number, !plant_species, !location)
         errors.push('Please fill in all required fields');
-    if (req.file) 
-        if (req.file.size > 2000 * 1000)
-            errors.push('Cannot upload files greater than 2 MB');
     if (errors.length > 0)
         res.render("plants/add", { errors, description, number, status, plant_species, location });
     else {
-        let photo = '';
-        if (req.file)
-            photo = {
-                data: req.file.buffer,
-                contentType: req.file.mimetype
-            };
         let sql = `INSERT INTO ${constants.plants_table} 
                     (
                         description, number, status, plant_species, location
@@ -89,7 +77,7 @@ router.post("/add", upload.single("file"), (req, res) => {
             if (err) console.log(err);       
             else {
                 // req.flash('success_msgs', 'Plant added.');
-                res.redirect('back');
+                res.redirect('/plants/all');
             }
         });
     }

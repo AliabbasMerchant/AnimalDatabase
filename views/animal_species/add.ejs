@@ -45,8 +45,11 @@
                 </div>
                 <div class="form-group">
                     <label for="_status">Status</label>
-                    <input type="text" class="form-control" id="_status" placeholder="Enter Status"
-                        name="_status" value="<%= typeof _status != 'undefined' ? _status : '' %>">
+                    <select class="form-control" id="_status" name="_status">
+                        <option value="Normal">Normal</option>
+                        <option value="Endangered">Endangered</option>
+                        <option value="Extinct">Extinct</option>
+                    </select>
                 </div>
                 
                 <button type="submit" class="btn btn-outline-dark pl-4 pr-4">Add</button>
