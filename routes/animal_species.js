@@ -72,7 +72,7 @@ router.post("/add", (req, res) => {
             if (err) console.log(err);
             else {
                 // req.flash('success_msgs', 'Animal Species added.');
-                res.redirect('/admin');
+                res.redirect('back');
             }
         });
     }

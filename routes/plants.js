@@ -89,7 +89,7 @@ router.post("/add", upload.single("file"), (req, res) => {
             if (err) console.log(err);       
             else {
                 // req.flash('success_msgs', 'Plant added.');
-                res.redirect('/admin');
+                res.redirect('back');
             }
         });
     }

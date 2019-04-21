@@ -18,7 +18,8 @@ router.get("/find", (req, res) => {
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.area_table}`, (err, result) => {
-        res.render("areas/results",{result});
+        if(err) console.log(err);
+        else res.render("areas/results",{result});
     });
 });
 
@@ -40,18 +41,16 @@ router.post("/add", (req, res) => {
                     (
                         name, boundary
                     ) 
-                    VALUES 
+                    VALUES
                     (
-                        ?, ?
+                        ?, POLYGON((?))
                     )`;
-        // TODO Insert statement
-        // Be sure that if something is empty, we put in NULL, and not 
         // Consider the polygon for boundary points
         con.query(sql, [name, boundary], function (err, result) {
             if (err) console.log(err);       
             else {
                 // req.flash('success_msgs', 'Areas added.');
-                res.redirect('/admin');
+                res.redirect('back');
             }
         });
     }

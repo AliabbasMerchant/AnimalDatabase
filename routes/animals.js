@@ -88,7 +88,7 @@ router.post("/add", upload.single("file"), (req, res) => {
             if (err) console.log(err);
             else {
                 // req.flash('success_msgs', 'Animal added.');
-                res.redirect('/admin');
+                res.redirect('back');
             }
         });
     }

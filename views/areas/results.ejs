@@ -10,16 +10,18 @@
                 <th scope="col">Boundary</th>
             </tr>
         </thead>
-        <% if (result) { %>
         <tbody>
+        <% if (result.length > 0) { %>
             <% result.forEach(result => { %>
             <tr>
                 <td><%= result.name %></td>
                 <td><%= result.boundary %></td>
             </tr>
             <% }); %>
-        </tbody>
+        <% } else { %>
+            <tr><td colspan="2">Not found</td></tr>
         <% } %>
+        </tbody>
     </table>
 </div>
 
