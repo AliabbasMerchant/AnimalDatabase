@@ -6,10 +6,10 @@
 
 
 Later:
-- [ ] Make the find pages
+- [X ] Make the find pages
 
 - [ ] Status and Gender need to be a dropdown
 - [X] So does animal_species, in case of animals
 - [X] So does plant_species, in case of plants
 
-- [ ] Add option to edit
+- [X ] Add option to edit
