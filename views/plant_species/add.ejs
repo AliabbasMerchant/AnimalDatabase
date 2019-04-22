@@ -46,9 +46,9 @@
                 <div class="form-group">
                     <label for="_status">Status</label>
                     <select class="form-control" id="_status" name="_status">
-                        <option value="Normal">Normal</option>
-                        <option value="Endangered">Endangered</option>
-                        <option value="Extinct">Extinct</option>
+                        <% species_status.forEach((status) => { %>
+                            <option value="<%= status %>"><%= status %></option>
+                        <% }); %>
                     </select>
                 </div>
                 

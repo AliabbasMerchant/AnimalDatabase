@@ -109,6 +109,11 @@ app.use(express.urlencoded({
 //     next();
 // })
 
+app.use((req, res, next) => {
+    res.locals.entity_status=constants.entity_status;
+    res.locals.species_status=constants.species_status;
+    next();
+});
 app.get("/", (req, res) => {
     res.render("home");
 });
