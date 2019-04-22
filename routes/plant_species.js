@@ -12,6 +12,43 @@ const con = mysql.createConnection({
     database: constants.db
 });
 
+router.get("/show/:plant_species", (req, res) => {
+    con.query(`SELECT * FROM ${constants.plant_species_table} WHERE plant_species="${req.params.plant_species}"`, (err, plant_species) => {
+        if (err) console.log(err);
+        else res.render("plant_species/show", { species: plant_species[0] });
+    });
+});
+
+router.get("/edit/:plant_species", (req, res) => {
+    con.query(`SELECT * FROM ${constants.plant_species_table} WHERE plant_species="${req.params.plant_species}"`, (err, species) => {
+        if (err) console.log(err);
+        else {
+            const { plant_species, common_name, description, _genus, _order, _class, _phylum, _status } = species[0];
+            res.render("plant_species/edit", { plant_species, common_name, description, _genus, _order, _class, _phylum, _status });
+        }
+    });
+});
+
+router.post("/edit/:plant_species", (req, res) => {
+    const { plant_species, common_name, description, _genus, _order, _class, _phylum, _status } = req.body;
+    console.log(req.body);
+    let errors = [];
+    if (!common_name, !_genus, !_order, !_class, !_phylum)
+        errors.push('Please fill in all required fields');
+    if (errors.length > 0)
+        res.render("plant_species/edit", { errors, plant_species, common_name, description, _genus, _order, _class, _phylum, _status});
+    else {
+        let sql = `UPDATE ${constants.plant_species_table} SET common_name="${common_name}", description="${description}", _genus="${_genus}", _order="${_order}", _class="${_class}", _phylum="${_phylum}", _status="${_status}" WHERE plant_species="${req.params.plant_species}"`;
+        console.log(sql);
+        con.query(sql, function (err, result) {
+            if (err) console.log(err);
+            else {
+                res.redirect('/plant_species/all');
+            }
+        });
+    }
+});
+
 router.get("/find", (req, res) => {
     res.render("plant_species/find");
 });
