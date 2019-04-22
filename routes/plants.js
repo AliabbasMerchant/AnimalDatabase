@@ -12,6 +12,58 @@ const con = mysql.createConnection({
     database: constants.db
 });
 
+router.get("/show/:id", (req, res) => {
+    con.query(`SELECT * FROM ${constants.plants_table} WHERE plant_id=${req.params.id}`, (err, plant) => {
+        if (err) console.log(err);
+        else {
+            let sql =`select name FROM ${constants.area_table}
+            where ST_Contains(boundary, (SELECT location from ${constants.plants_table} where plant_id=${req.params.id}));`
+            con.query(sql, (err, result)=> {
+                if(err) console.log(err);
+                else {
+                    if(typeof result[0] != 'undefined')
+                        plant[0].area = result[0].name;
+                    res.render("plants/show", { plant: plant[0] });
+                }
+            });
+        }
+    });
+});
+
+router.get("/edit/:id", (req, res) => {
+    con.query(`SELECT * FROM ${constants.plants_table} WHERE plant_id=${req.params.id}`, (err, plant) => {
+        if (err) console.log(err);
+        else {
+            con.query(`SELECT plant_species FROM ${constants.plant_species_table};`, (err, all_species) => {
+                if (err) console.log(err);
+                else {
+                    const { plant_id, description, number, status, plant_species, location } = plant[0];
+                    res.render("plants/edit", { plant_id, description, number, status, plant_species, location, all_species });
+                }
+            });
+        }
+    });
+});
+
+router.post("/edit/:id", (req, res) => {
+    const { description, number, status, plant_species, location } = req.body;
+    let errors = [];
+    let loc = String(location).split(' ');
+    if (!number, !plant_species, !location)
+        errors.push('Please fill in all required fields');
+    if (errors.length > 0)
+        res.render("plants/edit", { errors, description, number, status, plant_species, location, id:req.params.id });
+    else {
+        var sql = `UPDATE ${constants.plants_table} SET description="${description}", number=${number}, status="${status}", plant_species="${plant_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE plant_id=${req.params.id}`;
+        con.query(sql, function (err, result) {
+            if (err) console.log(err.message);
+            else {
+                res.redirect('/plants/all');
+            }
+        });
+    }
+});
+
 router.get("/find", (req, res) => {
     con.query(`SELECT plant_species FROM ${constants.plant_species_table}`, (err, plant_species) => {
         if (err) console.log(err);

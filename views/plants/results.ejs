@@ -15,11 +15,11 @@
         <tbody>
             <% if (result.length > 0) { %>
                 <% result.forEach(result => { %>
-                <tr>
+                <tr onclick="window.location='/plants/show/<%= result.plant_id %>';">
                     <td><%= result.description %></td>
                     <td><%= result.number %></td>
                     <td><%= result.status %></td>
-                    <td><%= result.animal_species %></td>
+                    <td><%= result.plant_species %></td>
                 </tr>
                 <% }); %>
             <% } else { %>

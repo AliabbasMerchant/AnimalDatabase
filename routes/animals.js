@@ -18,7 +18,18 @@ const con = mysql.createConnection({
 router.get("/show/:id", (req, res) => {
     con.query(`SELECT * FROM ${constants.animals_table} WHERE animal_id=${req.params.id}`, (err, animal) => {
         if (err) console.log(err);
-        else res.render("animals/show", { animal: animal[0] });
+        else {
+            let sql = `select name FROM ${constants.area_table}
+            where ST_Contains(boundary, (SELECT location from ${constants.animals_table} where animal_id=${req.params.id}));`
+            con.query(sql, (err, result) => {
+                if (err) console.log(err);
+                else {
+                    if(typeof result[0] != 'undefined')
+                        animal[0].area = result[0].name;
+                    res.render("animals/show", { animal: animal[0] });
+                }
+            });
+        }
     });
 });
 
@@ -47,7 +58,7 @@ router.post("/edit/:id", upload.single("file"), (req, res) => {
         if (req.file.size > 2000 * 1000)
             errors.push('Cannot upload files greater than 2 MB');
     if (errors.length > 0)
-        res.render("animals/add", { errors, name, dob, status, gender, description, animal_species, location, id:req.params.id });
+        res.render("animals/add", { errors, name, dob, status, gender, description, animal_species, location, id: req.params.id });
     else {
         if (req.file) {
             let photo = req.file.buffer;

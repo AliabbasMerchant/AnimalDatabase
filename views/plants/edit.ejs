@@ -1,0 +1,48 @@
+<% include ../layouts/header %>
+
+<div class="container mt-3 text-dark">
+    <div class="row">
+        <div class="col-md-1 col-lg-2 col-xl-3"></div>
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <form action="/plants/edit/<%= plant_id %>" method="POST">
+                <div class="heading-2 text-center my-3">EDIT PLANT</div>
+                <% include ../layouts/messages %>
+                <div class="form-group">
+                    <label for="description">Description</label>
+                    <textarea type="text" class="form-control" rows="5" id="description" placeholder="Enter Description"
+                        name="description"><%= typeof description != 'undefined' ? description.trim() : '' %></textarea>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="number">Number</label>
+                    <input type="number" class="form-control" id="number" placeholder="Enter Plant Number"
+                        name="number" value="<%= typeof number != 'undefined' ? number : '' %>">
+                </div>
+                <div class="form-group">
+                    <label for="status">Status</label>
+                    <select class="form-control" id="status" name="status">
+                        <% entity_status.forEach((status) => { %>
+                            <option value="<%= status %>"><%= status %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="plant_species">Plant Species</label>
+                    <select class="form-control" id="plant_species" name="plant_species">
+                        <% all_species.forEach((species) => { %>
+                            <option value="<%= species.plant_species %>"><%= species.plant_species %></option>
+                        <% }); %>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="required" for="location">Location</label>
+                    <input type="text" class="form-control" id="location" placeholder="Enter Latitude and Longitude"
+                        name="location" value="<%= typeof location != 'undefined' ? location.x+' '+location.y : '' %>">
+                </div>
+
+                <button type="submit" class="btn btn-outline-dark pl-4 pr-4">Save</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<% include ../layouts/footer %>

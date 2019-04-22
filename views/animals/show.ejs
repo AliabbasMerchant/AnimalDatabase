@@ -39,11 +39,16 @@
                 <label for="location">Location</label>
                 <div><%= typeof animal.location != 'undefined' ? (animal.location.x+", "+animal.location.y) : '' %></div>
             </div>
+            <div class="form-group">
+                <label for="area">Area</label>
+                <div><%= typeof animal.area != 'undefined' ? animal.area : '' %></div>
+            </div>
             
             <a role="button" class="btn btn-info" href="/animals/edit/<%= animal.animal_id %>">Edit</a>
         </div>
     </div>
 </div>
+
 <style>
 label {
     font-weight: bold;
