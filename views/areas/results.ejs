@@ -13,9 +13,9 @@
         <tbody>
         <% if (result.length > 0) { %>
             <% result.forEach(result => { %>
-            <tr>
+            <tr onclick="window.location='/areas/show/<%= result.name %>';">
                 <td><%= result.name %></td>
-                <td><%= JSON.stringify(result.boundary[0]) %></td>
+                <td><%= result.boundary %></td>
             </tr>
             <% }); %>
         <% } else { %>

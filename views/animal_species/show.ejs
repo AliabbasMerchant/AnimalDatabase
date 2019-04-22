@@ -1,0 +1,52 @@
+<% include ../layouts/header %>
+
+<div class="container mt-3 text-dark">
+    <div class="row">
+        <div class="col-md-1 col-lg-2 col-xl-3"></div>
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="heading-2 text-center my-3">VIEW ANIMAL SPECIES</div>
+            <% include ../layouts/messages %>
+            <div class="form-group">
+                <label for="animal_species">Animal Species</label>
+                <div><%= typeof species.animal_species != 'undefined' ? species.animal_species : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="common_name">Common Name</label>
+                <div><%= typeof species.common_name != 'undefined' ? species.common_name : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="description">Description</label>
+                <div><%= typeof species.description != 'undefined' ? species.description : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="_genus">Genus</label>
+                <div><%= typeof species._genus != 'undefined' ? species._genus : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="_order">Order</label>
+                <div><%= typeof species._order != 'undefined' ? species._order : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="_class">Class</label>
+                <div><%= typeof species._class != 'undefined' ? species._class : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="_phylum">Phylum</label>
+                <div><%= typeof species._phylum != 'undefined' ? species._phylum : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="_status">Status</label>
+                <div><%= typeof species._status != 'undefined' ? species._status : '' %></div>
+            </div>
+
+            <a role="button" class="btn btn-info" href="/animal_species/edit/<%= species.animal_species %>">Edit</a>
+        </div>
+    </div>
+</div>
+<style>
+label {
+    font-weight: bold;
+}
+</style>
+
+<% include ../layouts/footer %>

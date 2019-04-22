@@ -37,6 +37,40 @@ router.get("/edit/:id", (req, res) => {
     });
 });
 
+router.post("/edit/:id", upload.single("file"), (req, res) => {
+    const { name, dob, status, gender, description, animal_species, location } = req.body;
+    let loc = String(location).split(' '); // This is giving some error
+    let errors = [];
+    if (!name, !dob, !gender, !animal_species)
+        errors.push('Please fill in all required fields');
+    if (req.file)
+        if (req.file.size > 2000 * 1000)
+            errors.push('Cannot upload files greater than 2 MB');
+    if (errors.length > 0)
+        res.render("animals/add", { errors, name, dob, status, gender, description, animal_species, location, id:req.params.id });
+    else {
+        if (req.file) {
+            let photo = req.file.buffer;
+            var sql = `UPDATE ${constants.animals_table} SET name="${name}", dob="${dob}", status="${status}", gender="${gender}", description="${description}", photo=?, animal_species="${animal_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE animal_id=${req.params.id}`;
+            con.query(sql, [photo], function (err, result) {
+                if (err) console.log(err.message);
+                else {
+                    res.redirect('/animals/all');
+                }
+            });
+        } else {
+            var sql = `UPDATE ${constants.animals_table} SET name="${name}", dob="${dob}", status="${status}", gender="${gender}", description="${description}", animal_species="${animal_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE animal_id=${req.params.id}`;
+            con.query(sql, function (err, result) {
+                if (err) console.log(err.message);
+                else {
+                    res.redirect('/animals/all');
+                }
+            });
+        }
+
+    }
+});
+
 router.get("/find", (req, res) => {
     con.query(`SELECT animal_species FROM ${constants.animal_species_table}`, (err, animal_species) => {
         if (err) console.log(err);
@@ -115,40 +149,6 @@ router.post("/add", upload.single("file"), (req, res) => {
                 res.redirect('/animals/all');
             }
         });
-    }
-});
-
-router.post("/edit/:id", upload.single("file"), (req, res) => {
-    const { name, dob, status, gender, description, animal_species, location } = req.body;
-    let loc = String(location).split(' '); // This is giving some error
-    let errors = [];
-    if (!name, !dob, !gender, !animal_species)
-        errors.push('Please fill in all required fields');
-    if (req.file)
-        if (req.file.size > 2000 * 1000)
-            errors.push('Cannot upload files greater than 2 MB');
-    if (errors.length > 0)
-        res.render("animals/add", { errors, name, dob, status, gender, description, animal_species, location });
-    else {
-        if (req.file) {
-            let photo = req.file.buffer;
-            var sql = `UPDATE ${constants.animals_table} SET name="${name}", dob="${dob}", status="${status}", gender="${gender}", description="${description}", photo=?, animal_species="${animal_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE animal_id=${req.params.id}`;
-            con.query(sql, [photo], function (err, result) {
-                if (err) console.log(err.message);
-                else {
-                    res.redirect('/animals/all');
-                }
-            });
-        } else {
-            var sql = `UPDATE ${constants.animals_table} SET name="${name}", dob="${dob}", status="${status}", gender="${gender}", description="${description}", animal_species="${animal_species}", location=POINT(${loc[0]}, ${loc[1]}) WHERE animal_id=${req.params.id}`;
-            con.query(sql, function (err, result) {
-                if (err) console.log(err.message);
-                else {
-                    res.redirect('/animals/all');
-                }
-            });
-        }
-
     }
 });
 

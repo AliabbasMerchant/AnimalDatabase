@@ -12,6 +12,41 @@ const con = mysql.createConnection({
     database: constants.db
 });
 
+router.get("/show/:animal_species", (req, res) => {
+    con.query(`SELECT * FROM ${constants.animal_species_table} WHERE animal_species="${req.params.animal_species}"`, (err, animal_species) => {
+        if (err) console.log(err);
+        else res.render("animal_species/show", { species: animal_species[0] });
+    });
+});
+
+router.get("/edit/:animal_species", (req, res) => {
+    con.query(`SELECT * FROM ${constants.animal_species_table} WHERE animal_species="${req.params.animal_species}"`, (err, species) => {
+        if (err) console.log(err);
+        else {
+            const { animal_species, common_name, description, _genus, _order, _class, _phylum, _status } = species[0];
+            res.render("animal_species/edit", { animal_species, common_name, description, _genus, _order, _class, _phylum, _status });
+        }
+    });
+});
+
+router.post("/edit/:animal_species", (req, res) => {
+    const { animal_species, common_name, description, _genus, _order, _class, _phylum, _status } = req.body;
+    let errors = [];
+    if (!common_name, !_genus, !_order, !_class, !_phylum)
+        errors.push('Please fill in all required fields');
+    if (errors.length > 0)
+        res.render("animal_species/add", { errors, animal_species, common_name, description, _genus, _order, _class, _phylum, _status });
+    else {
+        let sql = `UPDATE ${constants.animal_species_table} SET common_name="${common_name}", description="${description}", _genus="${_genus}", _order="${_order}", _class="${_class}", _phylum="${_phylum}", _status="${_status}" WHERE animal_species="${req.params.animal_species}"`;
+        con.query(sql, function (err, result) {
+            if (err) console.log(err);
+            else {
+                res.redirect('/animal_species/all');
+            }
+        });
+    }
+});
+
 router.get("/find", (req, res) => {
     res.render("animal_species/find");
 });
@@ -20,8 +55,8 @@ router.post("/find", (req, res) => {
     let where_clause = '';
     for (var property in req.body) {
         if (req.body.hasOwnProperty(property)) {
-            if(req.body[property] != '' && property!='sort' && property!= 'limit' && property!= 'skip') {
-                if(where_clause == '') {
+            if (req.body[property] != '' && property != 'sort' && property != 'limit' && property != 'skip') {
+                if (where_clause == '') {
                     where_clause = 'WHERE ';
                 }
                 where_clause += `${property}="${req.body[property]}" AND `;
@@ -32,14 +67,14 @@ router.post("/find", (req, res) => {
     let sql = `SELECT * FROM ${constants.animal_species_table} ${where_clause} ORDER BY ${req.body.sort} LIMIT ${req.body.limit} OFFSET ${req.body.skip};`;
     console.log(sql);
     con.query(sql, (err, result) => {
-        if(err) console.log(err);
+        if (err) console.log(err);
         else res.render("animal_species/results", { result });
     });
 });
 
 router.get("/all", (req, res) => {
     con.query(`SELECT * FROM ${constants.animal_species_table};`, (err, result) => {
-        if(err) console.log(err);
+        if (err) console.log(err);
         else res.render("animal_species/results", { result });
     });
 });

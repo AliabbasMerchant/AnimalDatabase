@@ -1,0 +1,29 @@
+<% include ../layouts/header %>
+
+<div class="container mt-3 text-dark">
+    <div class="row">
+        <div class="col-md-1 col-lg-2 col-xl-3"></div>
+        <div class="col-md-10 col-lg-8 col-xl-6">
+            <div class="heading-2 text-center my-3">VIEW AREA</div>
+            <% include ../layouts/messages %>
+            <div class="form-group">
+                <label for="name">Name</label>
+                <div><%= typeof area.name != 'undefined' ? area.name : '' %></div>
+            </div>
+            <div class="form-group">
+                <label for="boundary">Boundary</label>
+                <div><%= typeof area.boundary != 'undefined' ? area.boundary : '' %></div>
+            </div>
+            
+            <a role="button" class="btn btn-info" href="/areas/edit/<%= area.name %>">Edit</a>
+        </div>
+    </div>
+</div>
+
+<style>
+label {
+    font-weight: bold;
+}
+</style>
+        
+<% include ../layouts/footer %>
