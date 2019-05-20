@@ -5,7 +5,7 @@ import random
 mydb = mysql.connector.connect(
   host = "localhost",
   user="root",
-  passwd="Harsh0132",
+  passwd="root",
   database="wildlife"
 )
 

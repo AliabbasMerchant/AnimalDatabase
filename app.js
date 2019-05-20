@@ -89,7 +89,7 @@ function create_tables(con) {
 con.connect(function (err) {
     if (err) throw err;
     console.log("Connected to MySQL!");
-      con.query(`CREATE DATABASE IF NOT EXISTS ${constants.db}`, function (err, result) {
+      con.query(`CREATE DATABASE IF NOT EXISTS ${constants.db};`, function (err, result) {
         if (err) throw err;
         console.log("Database created");
       });
@@ -129,4 +129,4 @@ app.get("/*", (req, res)=>{
     res.redirect("/");
 });
 
-app.listen(process.env.PORT || 3000);
+app.listen(process.env.PORT || 7000);
